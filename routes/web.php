@@ -31,4 +31,17 @@ Route::prefix('admin')
             App\Http\Controllers\Admin\DashboardController::class,
             'index',
         ]);
+        // Category Routes
+        Route::get('category', [
+            App\Http\Controllers\Admin\CategoryController::class,
+            'index',
+        ]);
+        Route::get('category/create', [
+            App\Http\Controllers\Admin\CategoryController::class,
+            'create',
+        ]);
+        Route::post('category', [
+            App\Http\Controllers\Admin\CategoryController::class,
+            'store',
+        ]);
     });
