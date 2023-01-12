@@ -51,6 +51,13 @@ Route::prefix('admin')
             Route::get('/products', 'index');
             Route::get('/products/create', 'create');
             Route::post('/products', 'store');
+            Route::get('products/{product}/edit', 'edit');
+            Route::put('/products/{product}', 'update');
+            Route::get('products/{product_id}/delete', 'destory');
+            Route::get(
+                '/product-image/{product_image_id}/delete',
+                'destoryImage'
+            );
         });
 
         Route::get('/brands', App\Http\Livewire\Admin\Brand\Index::class);
