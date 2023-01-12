@@ -28,6 +28,11 @@ class Product extends Model
         'meta_description',
     ];
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
     public function productImages()
     {
         // One Product has Many Images
