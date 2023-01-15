@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use App\Http\Requests\ProductFormRequest;
+use App\Models\Color;
 
 class ProductController extends Controller
 {
@@ -24,7 +25,11 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $brands = Brand::all();
-        return view('admin.products.create', compact('categories', 'brands'));
+        $colors = Color::where('status', '0')->get();
+        return view(
+            'admin.products.create',
+            compact('categories', 'brands', 'colors')
+        );
     }
 
     public function store(ProductFormRequest $request)
@@ -68,6 +73,16 @@ class ProductController extends Controller
             }
         }
 
+        if ($request->colors) {
+            foreach ($request->colors as $key => $color) {
+                $product->productColors()->create([
+                    'product_id' => $product->id,
+                    'color_id' => $color,
+                    'quantity' => $request->colorQuantity[$key] ?? 0,
+                ]);
+            }
+        }
+
         return redirect('/admin/products')->with(
             'message',
             'Product Added Successfully'
@@ -79,9 +94,13 @@ class ProductController extends Controller
         $categories = Category::all();
         $brands = Brand::all();
         $product = Product::findOrFail($product_id);
+        $product_color = $product->productColors->pluck('color_id')->toArray();
+        // dd($product_color);
+        $colors = Color::whereNotIn('id', $product_color)->get();
+        // dd($colors);
         return view(
             'admin.products.edit',
-            compact('categories', 'brands', 'product')
+            compact('categories', 'brands', 'product', 'colors')
         );
     }
 
@@ -165,5 +184,10 @@ class ProductController extends Controller
         return redirect()
             ->back()
             ->with('message', 'Product Deleted with all its image');
+    }
+
+    public function updateProductColorQty(Request $request,$product_color_id)
+    {
+        # code...
     }
 }
