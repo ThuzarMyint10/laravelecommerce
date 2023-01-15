@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\ProductColor;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
@@ -30,6 +31,7 @@ class Product extends Model
 
     public function category()
     {
+        // belongsTo() => Define an inverse one-to-one or many relationship.
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
@@ -38,5 +40,10 @@ class Product extends Model
         // One Product has Many Images
         // hasMany() =>Define one to many Relationship
         return $this->hasMany(ProductImage::class, 'product_id', 'id');
+    }
+
+    public function productColors()
+    {
+        return $this->hasMany(ProductColor::class, 'product_id', 'id');
     }
 }
