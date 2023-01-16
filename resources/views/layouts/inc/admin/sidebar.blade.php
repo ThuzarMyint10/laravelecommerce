@@ -88,6 +88,12 @@
         </div>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="{{ url('admin/sliders') }}">
+          <i class="mdi mdi-view-carousel menu-icon"></i>
+          <span class="menu-title">Home Slider</span>
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="documentation/documentation.html">
           <i class="mdi mdi-file-document-box-outline menu-icon"></i>
           <span class="menu-title">Documentation</span>
